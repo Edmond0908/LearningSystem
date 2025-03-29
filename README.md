@@ -109,6 +109,22 @@ Note: Be sure to update the `GOOGLE_API_KEY` in `main.py` with your own API key 
 
 ---
 
+## 🧼 Code Quality (Pre-commit Hooks)
+
+This project uses [pre-commit](https://pre-commit.com) to automatically format, lint, and clean code before commits.
+
+To set it up:
+
+```bash
+pip install pre-commit
+pre-commit install
+pre-commit run --all-files  # Optional: to run on all files once
+```
+
+The configuration is in `.pre-commit-config.yaml`.
+
+---
+
 ## 📚 References
 
 - [Whisper (OpenAI)](https://github.com/openai/whisper)

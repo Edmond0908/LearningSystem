@@ -28,3 +28,4 @@ gradio
 # pip install python-dotenv
 # or other libraries for environment management
 ffmpeg
+pre-commit
