@@ -1,12 +1,16 @@
 import os
+
 from rag_system import RAGSystem
 from summarizer import summarize_with_palm
+
 
 def main():
 
     if "GOOGLE_API_KEY" not in os.environ:
-        raise EnvironmentError("GOOGLE_API_KEY not set. Please export it as an environment variable.")
-    
+        raise OSError(
+            "GOOGLE_API_KEY not set. Please export it as an environment variable."
+        )
+
     # 0. Initialize RAGSystem (using Whisper base for transcription)
     rag = RAGSystem(model_size="base")
 
@@ -17,9 +21,21 @@ def main():
     os.makedirs(transcripts_dir, exist_ok=True)
 
     # 1. Define multiple data sources
+    # Template: (YouTube URL, output audio file path,
+    #           transcript file path, label for the source)
     youtube_data = [
-        ("https://www.youtube.com/watch?v=kHV1g-yHxgQ", f"{audio_dir}/Intro2DES.mp3", f"{transcripts_dir}/Intro2DES.txt", "Video1"),
-        ("https://www.youtube.com/watch?v=iqyxRyi_mEE", f"{audio_dir}/DESOverview.mp3", f"{transcripts_dir}/DESOverview.txt", "Video2"),
+        (
+            "https://www.youtube.com/watch?v=kHV1g-yHxgQ",
+            f"{audio_dir}/Intro2DES.mp3",
+            f"{transcripts_dir}/Intro2DES.txt",
+            "Video1",
+        ),
+        (
+            "https://www.youtube.com/watch?v=iqyxRyi_mEE",
+            f"{audio_dir}/DESOverview.mp3",
+            f"{transcripts_dir}/DESOverview.txt",
+            "Video2",
+        ),
     ]
 
     texts_and_sources = []
@@ -33,7 +49,10 @@ def main():
 
         # Transcribe if transcript doesn't exist
         if not os.path.exists(transcript_name):
-            print(f"Transcript '{transcript_name}' not found. Transcribing '{audio_name}'...")
+            print(
+                f"Transcript '{transcript_name}' not found. "
+                f"Transcribing '{audio_name}'..."
+            )
             text = rag.transcribe(audio_name)
             rag.save_transcript(text, transcript_name)
 
@@ -43,8 +62,11 @@ def main():
             print(summary)
 
         else:
-            print(f"Transcript '{transcript_name}' already exists. Skipping transcription.")
-            with open(transcript_name, "r", encoding="utf-8") as f:
+            print(
+                f"Transcript '{transcript_name}' already exists. "
+                "Skipping transcription."
+            )
+            with open(transcript_name, encoding="utf-8") as f:
                 text = f.read()
 
         texts_and_sources.append((text, source_label))
@@ -52,12 +74,15 @@ def main():
     # 2. Build or load FAISS index with local embeddings
     faiss_index_dir = "faiss_index"
     if not os.path.exists(faiss_index_dir):
-        print(f"\nNo FAISS index folder found. Building index from multiple transcripts...")
+        print(
+            "\nNo FAISS index folder found. "
+            "Building index from multiple transcripts..."
+        )
         rag.build_vectorstore_from_multiple_texts(
             texts_and_sources=texts_and_sources,
             chunk_size=1000,
             chunk_overlap=200,
-            save_path=faiss_index_dir
+            save_path=faiss_index_dir,
         )
     else:
         print(f"\nFAISS index found at '{faiss_index_dir}'. Loading...")
@@ -73,6 +98,7 @@ def main():
 
     # 5. (Optional) Launch Gradio UI
     rag.launch_gradio_app()
+
 
 if __name__ == "__main__":
     main()

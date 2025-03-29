@@ -1,10 +1,11 @@
 import json
 import os
-import matplotlib.pyplot as plt
 from collections import Counter
 from datetime import datetime
 
-with open("query_log.json", "r", encoding="utf-8") as f:
+import matplotlib.pyplot as plt
+
+with open("query_log.json", encoding="utf-8") as f:
     logs = json.load(f)
 
 # 1. Line chart: queries over time

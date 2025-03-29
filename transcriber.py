@@ -1,10 +1,13 @@
 import os
+
 import whisper
+
 
 class Transcriber:
     """
     Handles transcription using Whisper.
     """
+
     def __init__(self, model_size: str = "base"):
         self.model_size = model_size
         self.model = None
@@ -28,5 +31,8 @@ class Transcriber:
         result = self.model.transcribe(file_path)
         text = result.get("text", "").strip()
         if not text:
-            raise ValueError("Transcription returned empty text. Check if the audio file is valid or not silent.")
+            raise ValueError(
+                "Transcription returned empty text. "
+                "Check if the audio file is valid or not silent."
+            )
         return text

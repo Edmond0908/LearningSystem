@@ -1,17 +1,20 @@
 import os
+
 from langchain.docstore.document import Document
 from langchain.text_splitter import CharacterTextSplitter
+
 
 class TranscriptProcessor:
     """
     Handles loading and chunking transcript text.
     """
+
     @staticmethod
     def load_transcript(path: str) -> str:
         """Loads the transcript text from a file."""
         if not os.path.exists(path):
             raise FileNotFoundError(f"File not found: {path}")
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             return f.read()
 
     @staticmethod
@@ -23,7 +26,7 @@ class TranscriptProcessor:
             separator="\n",
             chunk_size=chunk_size,
             chunk_overlap=chunk_overlap,
-            length_function=len
+            length_function=len,
         )
         chunks = text_splitter.split_text(text)
         docs = [Document(page_content=chunk) for chunk in chunks]
