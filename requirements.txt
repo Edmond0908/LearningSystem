@@ -1,0 +1,30 @@
+# For audio download
+yt-dlp
+
+# For transcription
+openai-whisper  # or 'whisper' if you're using the openai/whisper package
+
+# For RAG pipeline
+langchain>=0.0.200
+
+# For new location of classes if you want to remove deprecations:
+# pip install -U langchain-community langchain-huggingface langchain-openai
+
+# Vector DB
+faiss-cpu
+
+# Google Generative AI & embeddings dependencies
+google-generativeai
+langchain-google-genai
+
+# For HF embeddings
+transformers
+sentence-transformers
+
+# For local web interface
+gradio
+
+# You might also need:
+# pip install python-dotenv
+# or other libraries for environment management
+ffmpeg
