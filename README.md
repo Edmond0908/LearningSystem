@@ -45,19 +45,20 @@ pip install -r requirements.txt
 
 ```
 .
-├── audio/                  # Stored MP3 files
-├── transcripts/            # Transcribed text files
-├── query_log.json          # Logs of user questions and answers
-├── query_stats.png         # Auto-generated analytics image
-├── main.py                 # Full RAG pipeline
-├── rag_system.py           # Main RAG logic and QA interface
-├── transcriber.py          # Whisper transcription
-├── summarizer.py           # Gemini summarization
-├── downloader.py           # YouTube downloader
-├── analytics.py            # Query log visualizer
-├── Makefile                # Automation commands
+├── Makefile
+├── README.md
 ├── requirements.txt
-└── README.md
+├── main.py                 # Main pipeline script
+├── audio/                  # Stored MP3 files
+├── faiss_index/            # Saved FAISS vector index
+├── transcripts/            # Transcribed text files
+└── utils/                  # Supporting modules and helpers
+    ├── analytics.py
+    ├── downloader.py
+    ├── processor.py
+    ├── rag_system.py
+    ├── summarizer.py
+    └── transcriber.py
 ```
 
 ---
