@@ -1,7 +1,10 @@
 import os
 
-from rag_system import RAGSystem
-from summarizer import summarize_with_palm
+from utils.downloader import AudioDownloader
+from utils.processor import TranscriptProcessor
+from utils.rag_system import RAGSystem
+from utils.summarizer import summarize_with_palm
+from utils.transcriber import Transcriber
 
 
 def main():
@@ -43,7 +46,7 @@ def main():
         # Download audio if it doesn't exist
         if not os.path.exists(audio_name):
             print(f"\nAudio file '{audio_name}' not found. Downloading from {url}...")
-            rag.download_audio(url, audio_name)
+            AudioDownloader().download_youtube_audio(url, audio_name)
         else:
             print(f"\nAudio file '{audio_name}' already exists. Skipping download.")
 
@@ -53,8 +56,8 @@ def main():
                 f"Transcript '{transcript_name}' not found. "
                 f"Transcribing '{audio_name}'..."
             )
-            text = rag.transcribe(audio_name)
-            rag.save_transcript(text, transcript_name)
+            text = Transcriber().transcribe_audio(audio_name)
+            TranscriptProcessor().save_transcript(text, transcript_name)
 
             # Summarize after transcribing using Google PaLM 2
             summary = summarize_with_palm(text)
