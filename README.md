@@ -48,46 +48,61 @@ pip install -r requirements.txt
 ├── Makefile
 ├── README.md
 ├── requirements.txt
-├── main.py                 # Main pipeline script
-├── audio/                  # Stored MP3 files
-├── faiss_index/            # Saved FAISS vector index
-├── transcripts/            # Transcribed text files
-└── utils/                  # Supporting modules and helpers
-    ├── analytics.py
-    ├── downloader.py
-    ├── processor.py
-    ├── rag_system.py
-    ├── summarizer.py
-    └── transcriber.py
+├── main.py                 # Entry point: initializes RAG and launches the app
+├── app_ui.py              # Gradio web interface
+├── utils/                 # Supporting modules and helpers
+│   ├── analytics.py
+│   ├── downloader.py
+│   ├── processor.py
+│   ├── rag_system.py
+│   ├── summarizer.py
+│   └── transcriber.py
 ```
 
 ---
 
-## 🛠️ Usage
+## 🔄 System Flow Overview
 
-### Run full pipeline:
-
-```bash
-make run
-```
-
-### Run specific steps:
-
-```bash
-make transcribe     # Transcribe audio with Whisper
-make summarize      # Summarize text with Gemini
-make analyze        # Generate analytics chart
+```text
+           +------------------------+
+           |  YouTube URL / File    |
+           +-----------+------------+
+                       |
+                       v
+        +--------------+---------------+
+        | Transcription with Whisper   |
+        +--------------+---------------+
+                       |
+                       v
+        +--------------+---------------+
+        | Summarization (Gemini)       |
+        +--------------+---------------+
+                       |
+                       v
+        +--------------+---------------+
+        |  FAISS Vector Store (Search) |
+        +--------------+---------------+
+                       |
+                       v
+        +--------------+---------------+
+        | Gradio QA Interface (Gemini) |
+        +------------------------------+
 ```
 
 ---
 
 ## 🌐 Web Interface
 
-- A Gradio app will launch
-- Ask questions about the speech content
-- Session-based `user_id`s are automatically generated
-- Logs saved to `query_log.json`
-- Analytics available under the 📈 "Stats" tab
+- Launches via `app_ui.py` (called from `main.py`)
+- Users can upload audio or paste a YouTube URL
+- Transcript and summary shown
+- Ask questions about the content
+- Each user has a generated anonymous ID
+- Logs are saved to `query_log.json` for analysis
+
+```bash
+python main.py
+```
 
 ---
 
@@ -139,4 +154,4 @@ The configuration is in `.pre-commit-config.yaml`.
 ## 🙌 Author
 
 Created by Edmond Huang
-For Spring 2025 IOT Course RAG Project
+For Spring 2025 IT Course RAG Project
