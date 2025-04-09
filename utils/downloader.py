@@ -22,7 +22,7 @@ class AudioDownloader:
             return False
 
     @staticmethod
-    def download_youtube_audio(url: str, output_path: str = "speech.mp3") -> str:
+    def download_youtube_audio(url: str, output_path: str = "audio/speech.mp3") -> str:
         """
         Downloads the audio from a YouTube video
         using yt-dlp and returns the saved file path.
