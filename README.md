@@ -1,4 +1,4 @@
-# 🧠 RAG-HW: Retrieval-Augmented Generation for Lecture Understanding
+# 🧠 Retrieval-Augmented Generation for Lecture Understanding
 
 This project implements a complete RAG (Retrieval-Augmented Generation) pipeline that:
 - Downloads and transcribes YouTube speeches
@@ -26,7 +26,7 @@ This project implements a complete RAG (Retrieval-Augmented Generation) pipeline
 
 ```bash
 git clone <your-repo-url>
-cd RAG-HW
+cd LearningSystem
 python -m venv rag-env
 source rag-env/bin/activate
 ```
@@ -35,9 +35,23 @@ source rag-env/bin/activate
 
 ```bash
 make setup
-# or
-pip install -r requirements.txt
 ```
+
+### 3. Run the app
+
+```bash
+make run
+```
+
+---
+
+## 🛠️ Makefile Commands
+
+- `make setup` – Install required Python packages
+- `make run` – Launch the Gradio app
+- `make lint` – Run all pre-commit checks (black, flake8, etc.)
+- `make format` – Auto-format code with black, isort, autoflake
+- `make clean` – Remove intermediate logs and generated data
 
 ---
 
@@ -121,7 +135,6 @@ Make sure to export your API key:
 ```bash
 export GOOGLE_API_KEY="your_google_generative_ai_key"
 ```
-Note: Be sure to update the `GOOGLE_API_KEY` in `main.py` with your own API key if you're not using environment variables.
 
 ---
 

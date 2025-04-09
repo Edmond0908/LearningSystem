@@ -1,6 +1,4 @@
-# Makefile for RAG-HW project
-
-.PHONY: run analyze clean setup
+.PHONY: run analyze clean setup lint format
 
 run:
 	python main.py
@@ -14,3 +12,9 @@ setup:
 clean:
 	rm -f query_log.json
 	rm -rf Analytics audio transcripts faiss_index
+
+lint:
+	pre-commit run --all-files
+
+format:
+	black . && isort . && autoflake --in-place --remove-unused-variables --remove-all-unused-imports -r .
